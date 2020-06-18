@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>d58e6cce-bf50-4267-8cd7-c1be9bdbca70</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>setup.py</StartupFile>
+    <StartupFile>RSTR_Finder.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,8 +21,8 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Food_Finder.py" />
-    <Compile Include="get_rstr_info.py">
+    <Compile Include="RSTR_Finder.py" />
+    <Compile Include="Get_RSTR_info.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ScriptLanguage_TP.py" />

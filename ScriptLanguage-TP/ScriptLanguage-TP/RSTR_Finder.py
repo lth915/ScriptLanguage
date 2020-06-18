@@ -39,7 +39,7 @@ class StartPage(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
         self.controller = controller
-        label = Label(self, text="[고양시 맛집 검색 App]", font=controller.title_font)
+        label = Label(self, text="[정왕동 맛집 검색 App]", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
 
         button1 = Button(self, text="Go to Page One",

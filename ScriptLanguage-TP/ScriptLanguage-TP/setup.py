@@ -1,7 +1,7 @@
 from distutils.core import setup
 
 setup(
-      name = 'Food_Finder',
+      name = 'RSTR_Finder',
       version = '1.0',
-      py_modules = ['Food_Finder']
+      py_modules = ['RSTR_Finder']
       )
