@@ -23,4 +23,3 @@ list = list + result
  
 file = open("정왕동맛집.json", "w+")  # 검색 결과 json 파일로 저장
 file.write(json.dumps(list))  # 파일에 쓰기
- 
