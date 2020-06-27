@@ -2,6 +2,12 @@ from tkinter import *
 from tkinter import font
 import json
 import tkinter.messagebox
+import webbrowser
+import requests
+import folium
+
+ApiKey = "2EA5653A-003C-3EC5-9B6C-02D8A98D5E40"
+
 g_Tk = Tk()
 g_Tk.geometry("900x600+750+200")
 DataList = []
@@ -20,16 +26,17 @@ def InitSearchListBox():
     global SearchListBox
     ListBoxScrollbar = Scrollbar(g_Tk)
     ListBoxScrollbar.pack()
-    ListBoxScrollbar.place(x=150, y=50)
+    ListBoxScrollbar.place(x=200, y=50)
 
     TempFont = font.Font(g_Tk, size=15, weight='bold', family='Consolas')
     SearchListBox = Listbox(g_Tk, font=TempFont, activestyle='none',
-                            width=10, height=1, borderwidth=12, relief='ridge',
+                            width=15, height=1, borderwidth=12, relief='ridge',
                             yscrollcommand=ListBoxScrollbar.set)
 
-    SearchListBox.insert(0, "식당이름")
-    SearchListBox.insert(1, "식당주소")
-    SearchListBox.insert(2, "식당종류")
+    SearchListBox.insert(0, "식당이름(상호)")
+    SearchListBox.insert(1, "식당주소(도로명)")
+    SearchListBox.insert(2, "식당종류(메뉴)")
+    SearchListBox.insert(3, "식당위치(상호)")
     SearchListBox.pack()
     SearchListBox.place(x=10, y=50)
 
@@ -53,7 +60,7 @@ def SearchButtonAction():
     global SearchListBox
 
     RenderText.configure(state='normal')
-    RenderText.delete(0.0, END)  # ?댁쟾 異쒕젰 ?띿뒪??紐⑤몢 ??젣
+    RenderText.delete(0.0, END)
     iSearchIndex = SearchListBox.curselection()[0]
 
     if iSearchIndex == 0:
@@ -64,6 +71,9 @@ def SearchButtonAction():
 
     elif iSearchIndex == 2:
         SearchLibrary2()
+
+    elif iSearchIndex == 3:
+        SearchLibrary3()
 
     RenderText.configure(state='disabled')
 
@@ -82,8 +92,10 @@ def SearchLibrary1():
 
     for i in data:
         title = i['title']
-        if text in i['address']:
+        if text in i['roadAddress']:
             RenderText.insert(INSERT, title)
+            RenderText.insert(INSERT, "\n")
+            RenderText.insert(INSERT, i['roadAddress'])
             RenderText.insert(INSERT, "\n\n")
 
 def SearchLibrary2():
@@ -93,8 +105,39 @@ def SearchLibrary2():
         title = i['title']
         if text in i['category']:
             RenderText.insert(INSERT, title)
+            RenderText.insert(INSERT, "\n")
+            RenderText.insert(INSERT, i['category'])
             RenderText.insert(INSERT, "\n\n")
 
+def SearchLibrary3():
+    text = InputLabel.get()
+
+    for i in data:
+        if text in i['title']:
+            Address = i['roadAddress']
+            MarkerName = i['title']
+            break
+
+    r = requests.get('http://apis.vworld.kr/new2coord.do?q=' + 
+                     Address + '&apiKey=' + ApiKey + 
+                     '&domain=http://map.vworld.kr/&output=json')
+    a = r.json()
+
+    m = folium.Map(
+    location=[a['EPSG_4326_Y'], a['EPSG_4326_X']], zoom_start=15)
+    # 좌표값, 줌 확대 배율
+
+    folium.Marker(  # 마커 추가
+      location=[a['EPSG_4326_Y'], a['EPSG_4326_X']],
+      popup=MarkerName,
+      icon=folium.Icon(color='red',icon='star')
+    ).add_to(m)
+
+    m.save('map.html')
+
+    webbrowser.open('map.html')
+
+    
 
 def InitRenderText():
     global RenderText

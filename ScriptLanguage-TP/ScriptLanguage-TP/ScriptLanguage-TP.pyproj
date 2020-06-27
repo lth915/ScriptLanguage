@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>d58e6cce-bf50-4267-8cd7-c1be9bdbca70</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>map test.py</StartupFile>
+    <StartupFile>RSTR_Finder.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -23,6 +23,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="map test.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="map_conversion.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="get_map_xy.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Read_json.py">
