@@ -4,13 +4,14 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>d58e6cce-bf50-4267-8cd7-c1be9bdbca70</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Read_json.py</StartupFile>
+    <StartupFile>map test.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>ScriptLanguage-TP</Name>
     <RootNamespace>ScriptLanguage-TP</RootNamespace>
+    <TestFramework>Pytest</TestFramework>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,6 +22,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="map test.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Read_json.py">
       <SubType>Code</SubType>
     </Compile>
@@ -1115,6 +1119,7 @@
     <Content Include="venv\Scripts\pip3.exe" />
     <Content Include="venv\Scripts\python.exe" />
     <Content Include="venv\Scripts\pythonw.exe" />
+    <Content Include="정왕동맛집.json" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

@@ -1,83 +1,128 @@
 from tkinter import *
 from tkinter import font
+import json
+import tkinter.messagebox
+g_Tk = Tk()
+g_Tk.geometry("900x600+750+200")
+DataList = []
+
+with open('정왕동맛집.json', encoding="utf-8") as rstr:
+        data = json.load(rstr)
+
+def InitTopText():
+    TempFont = font.Font(g_Tk, size=20, weight='bold', family = 'Consolas')
+    MainText = Label(g_Tk, font = TempFont, text="[맛집 검색 App]")
+    MainText.pack()
+    MainText.place(x=80)
 
 
+def InitSearchListBox():
+    global SearchListBox
+    ListBoxScrollbar = Scrollbar(g_Tk)
+    ListBoxScrollbar.pack()
+    ListBoxScrollbar.place(x=150, y=50)
 
-class Title(Tk):
+    TempFont = font.Font(g_Tk, size=15, weight='bold', family='Consolas')
+    SearchListBox = Listbox(g_Tk, font=TempFont, activestyle='none',
+                            width=10, height=1, borderwidth=12, relief='ridge',
+                            yscrollcommand=ListBoxScrollbar.set)
 
-    def __init__(self,*args,**kwargs):
-        Tk.__init__(self,*args,**kwargs)
+    SearchListBox.insert(0, "식당이름")
+    SearchListBox.insert(1, "식당주소")
+    SearchListBox.insert(2, "식당종류")
+    SearchListBox.pack()
+    SearchListBox.place(x=10, y=50)
 
-        self.title_font = font.Font(family='Helvetica', size=20, weight="bold", slant="italic")
+    ListBoxScrollbar.config(command=SearchListBox.yview)
 
-        container = Frame(self)
-        container.pack(side="top", fill="both", expand=True)
-        container.grid_rowconfigure(0,weight=1)
-        container.grid_columnconfigure(0,weight=1)
+def InitInputLabel():
+    global InputLabel
+    TempFont = font.Font(g_Tk, size=15, weight='bold', family = 'Consolas')
+    InputLabel = Entry(g_Tk, font = TempFont, width = 26, borderwidth = 12, relief = 'ridge')
+    InputLabel.pack()
+    InputLabel.place(x=10, y=105)
 
-        self.frames={}
-        for F in (StartPage, PageOne, PageTwo):
-            page_name = F.__name__
-            frame = F(parent=container, controller=self)
-            self.frames[page_name] = frame
-
-            # put all of the pages in the same location;
-            # the one on the top of the stacking order
-            # will be the one that is visible.
-            frame.grid(row=0, column=0, sticky="nsew")
-
-        self.show_frame("StartPage")
-
-    def show_frame(self, page_name):
-        '''Show a frame for the given page name'''
-        frame = self.frames[page_name]
-        frame.tkraise()
-
-
-class StartPage(Frame):
-
-    def __init__(self, parent, controller):
-        Frame.__init__(self, parent)
-        self.controller = controller
-        label = Label(self, text="[정왕동 맛집 검색 App]", font=controller.title_font)
-        label.pack(side="top", fill="x", pady=10)
-
-        button1 = Button(self, text="Go to Page One",
-                            command=lambda: controller.show_frame("PageOne"))
-        button2 = Button(self, text="Go to Page Two",
-                            command=lambda: controller.show_frame("PageTwo"))
+def InitSearchButton():
+    TempFont = font.Font(g_Tk, size=12, weight='bold', family = 'Consolas')
+    SearchButton = Button(g_Tk, font = TempFont, text="검색",  command=SearchButtonAction)
+    SearchButton.pack()
+    SearchButton.place(x=330, y=110)
 
 
-        button1.place(x=10,y=400)
-        button2.place(x=10,y=450)
+def SearchButtonAction():
+    global SearchListBox
+
+    RenderText.configure(state='normal')
+    RenderText.delete(0.0, END)  # ?댁쟾 異쒕젰 ?띿뒪??紐⑤몢 ??젣
+    iSearchIndex = SearchListBox.curselection()[0]
+
+    if iSearchIndex == 0:
+        SearchLibrary0()
+        
+    elif iSearchIndex == 1:
+        SearchLibrary1()
+
+    elif iSearchIndex == 2:
+        SearchLibrary2()
+
+    RenderText.configure(state='disabled')
 
 
-class PageOne(Frame):
+def SearchLibrary0():
+    text = InputLabel.get()
 
-    def __init__(self, parent, controller):
-        Frame.__init__(self, parent)
-        self.controller = controller
-        label = Label(self, text="This is page 1", font=controller.title_font)
-        label.pack(side="top", fill="x", pady=10)
-        button = Button(self, text="Go to the start page",
-                           command=lambda: controller.show_frame("StartPage"))
-        button.pack()
+    for i in data:
+        title = i['title']
+        if text in i['title']:
+            RenderText.insert(INSERT, title)
+            RenderText.insert(INSERT, "\n\n")
+
+def SearchLibrary1():
+    text = InputLabel.get()
+
+    for i in data:
+        title = i['title']
+        if text in i['address']:
+            RenderText.insert(INSERT, title)
+            RenderText.insert(INSERT, "\n\n")
+
+def SearchLibrary2():
+    text = InputLabel.get()
+
+    for i in data:
+        title = i['title']
+        if text in i['category']:
+            RenderText.insert(INSERT, title)
+            RenderText.insert(INSERT, "\n\n")
 
 
+def InitRenderText():
+    global RenderText
 
-class PageTwo(Frame):
+    RenderTextScrollbar = Scrollbar(g_Tk)
+    RenderTextScrollbar.pack()
+    RenderTextScrollbar.place(x=375, y=200)
 
-    def __init__(self, parent, controller):
-        Frame.__init__(self, parent)
-        self.controller = controller
-        label = Label(self, text="This is page 2", font=controller.title_font)
-        label.pack(side="top", fill="x", pady=10)
-        button = Button(self, text="Go to the start page",
-                           command=lambda: controller.show_frame("StartPage"))
-        button.pack()
+    TempFont = font.Font(g_Tk, size=10, family='Consolas')
+    RenderText = Text(g_Tk, width=49, height=27, borderwidth=12, relief='ridge', yscrollcommand=RenderTextScrollbar.set)
+    RenderText.pack()
+    RenderText.place(x=10, y=215)
+    RenderTextScrollbar.config(command=RenderText.yview)
+    RenderTextScrollbar.pack(side=RIGHT, fill=BOTH)
 
-window = Title()
-window .geometry("400x600")
+    RenderText.configure(state='disabled')
 
-window .mainloop()
+    RenderText.insert(INSERT,"FV")
 
+
+InitTopText()
+InitSearchListBox()
+InitInputLabel()
+InitSearchButton()
+InitRenderText()
+
+#InitSendEmailButton()
+#InitSortListBox()
+#InitSortButton()
+
+g_Tk.mainloop()
