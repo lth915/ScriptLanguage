@@ -17,9 +17,11 @@ def getresults(keyword):
         list = list + call(keyword, num * 100 + 1)['items'] # json = items / xml = item
     return list
 
+text = input("검색할 지역명을 입력하세요[ex) 정왕동, 배곧, ...]: ") 
+
 list = []
-result = getresults("정왕동 맛집")
+result = getresults(text + '맛집')
 list = list + result
  
-file = open("정왕동맛집.json", "w+")  # 검색 결과 json 파일로 저장
+file = open(text + "맛집.json", "w+")  # 검색 결과 json 파일로 저장
 file.write(json.dumps(list))  # 파일에 쓰기

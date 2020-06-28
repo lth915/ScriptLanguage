@@ -5,6 +5,7 @@ import tkinter.messagebox
 import webbrowser
 import requests
 import folium
+import urllib.request
 
 ApiKey = "2EA5653A-003C-3EC5-9B6C-02D8A98D5E40"
 
@@ -130,7 +131,8 @@ def SearchLibrary3():
             else:
                 RenderText.insert(INSERT, '*웹사이트 없음!')
             RenderText.insert(INSERT, "\n\n")
-            break
+
+            #url = 'https://search.naver.com/search.naver?where=image&sm=tab_jum&query=' + i['title'] + '.jpg'
 
     r = requests.get('http://apis.vworld.kr/new2coord.do?q=' + 
                      Address + '&apiKey=' + ApiKey + 
