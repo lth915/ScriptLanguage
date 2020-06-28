@@ -36,7 +36,7 @@ def InitSearchListBox():
     SearchListBox.insert(0, "식당이름(상호)")
     SearchListBox.insert(1, "식당주소(도로명)")
     SearchListBox.insert(2, "식당종류(메뉴)")
-    SearchListBox.insert(3, "식당위치(상호)")
+    SearchListBox.insert(3, "식당정보(상호)")
     SearchListBox.pack()
     SearchListBox.place(x=10, y=50)
 
@@ -82,18 +82,16 @@ def SearchLibrary0():
     text = InputLabel.get()
 
     for i in data:
-        title = i['title']
         if text in i['title']:
-            RenderText.insert(INSERT, title)
+            RenderText.insert(INSERT, i['title'])
             RenderText.insert(INSERT, "\n\n")
 
 def SearchLibrary1():
     text = InputLabel.get()
 
     for i in data:
-        title = i['title']
         if text in i['roadAddress']:
-            RenderText.insert(INSERT, title)
+            RenderText.insert(INSERT, i['title'])
             RenderText.insert(INSERT, "\n")
             RenderText.insert(INSERT, i['roadAddress'])
             RenderText.insert(INSERT, "\n\n")
@@ -102,9 +100,8 @@ def SearchLibrary2():
     text = InputLabel.get()
 
     for i in data:
-        title = i['title']
         if text in i['category']:
-            RenderText.insert(INSERT, title)
+            RenderText.insert(INSERT, i['title'])
             RenderText.insert(INSERT, "\n")
             RenderText.insert(INSERT, i['category'])
             RenderText.insert(INSERT, "\n\n")
@@ -116,6 +113,23 @@ def SearchLibrary3():
         if text in i['title']:
             Address = i['roadAddress']
             MarkerName = i['title']
+            RenderText.insert(INSERT, i['title'])
+            RenderText.insert(INSERT, "\n")
+            RenderText.insert(INSERT, i['roadAddress'])
+            RenderText.insert(INSERT, "\n")
+            RenderText.insert(INSERT, i['category'])
+            RenderText.insert(INSERT, "\n")
+            if i['telephone'] != '':
+                RenderText.insert(INSERT, i['telephone'])
+            else:
+                RenderText.insert(INSERT, '*전화번호 없음!')
+            RenderText.insert(INSERT, "\n")
+            if i['link'] != '':
+                RenderText.insert(INSERT, i['link'])
+                webbrowser.open(i['link'])
+            else:
+                RenderText.insert(INSERT, '*웹사이트 없음!')
+            RenderText.insert(INSERT, "\n\n")
             break
 
     r = requests.get('http://apis.vworld.kr/new2coord.do?q=' + 
