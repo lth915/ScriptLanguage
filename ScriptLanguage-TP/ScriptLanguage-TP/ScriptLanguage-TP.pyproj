@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>d58e6cce-bf50-4267-8cd7-c1be9bdbca70</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Get_RSTR_info.py</StartupFile>
+    <StartupFile>RSTR_Finder.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>

@@ -7,6 +7,7 @@ import requests
 import folium
 import urllib.request
 
+
 ApiKey = "2EA5653A-003C-3EC5-9B6C-02D8A98D5E40"
 
 g_Tk = Tk()
@@ -15,6 +16,10 @@ DataList = []
 
 with open('정왕동맛집.json', encoding="utf-8") as rstr:
         data = json.load(rstr)
+
+photo = PhotoImage(file="food.gif")
+imageLabel=Label(g_Tk,image=photo)
+imageLabel.place(x=500, y=200)
 
 def InitTopText():
     TempFont = font.Font(g_Tk, size=20, weight='bold', family = 'Consolas')
