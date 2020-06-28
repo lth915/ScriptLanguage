@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>d58e6cce-bf50-4267-8cd7-c1be9bdbca70</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>RSTR_Finder.py</StartupFile>
+    <StartupFile>teller.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -31,6 +31,7 @@
     <Compile Include="get_map_xy.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="noti.py" />
     <Compile Include="Read_json.py">
       <SubType>Code</SubType>
     </Compile>

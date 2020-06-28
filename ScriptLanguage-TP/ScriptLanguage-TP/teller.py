@@ -8,7 +8,6 @@ from bs4 import BeautifulSoup
 import re
 from datetime import date, datetime, timedelta
 import traceback
-
 import noti
 
 
