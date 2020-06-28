@@ -40,6 +40,7 @@
     </Compile>
     <Compile Include="ScriptLanguage_TP.py" />
     <Compile Include="setup.py" />
+    <Compile Include="teller.py" />
     <Compile Include="venv\Lib\site-packages\easy_install.py" />
     <Compile Include="venv\Lib\site-packages\pip\_internal\build_env.py" />
     <Compile Include="venv\Lib\site-packages\pip\_internal\cache.py" />

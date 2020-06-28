@@ -1,11 +1,14 @@
 from tkinter import *
 from tkinter import font
+from telepot.loop import MessageLoop
 import json
 import tkinter.messagebox
 import webbrowser
 import requests
 import folium
 import urllib.request
+import telepot
+import tkinter.messagebox
 
 
 ApiKey = "2EA5653A-003C-3EC5-9B6C-02D8A98D5E40"
@@ -20,6 +23,21 @@ with open('정왕동맛집.json', encoding="utf-8") as rstr:
 photo = PhotoImage(file="food.gif")
 imageLabel=Label(g_Tk,image=photo)
 imageLabel.place(x=500, y=200)
+
+def handle(msg):
+    content_type, chat_type, chat_id = telepot.glance(msg)
+
+    if content_type == 'text':
+        if msg['text'].upper() == '정왕':
+            bot.sendMessage(chat_id, con)
+        elif msg['text'] == '/start':
+            pass
+        else:
+            bot.sendMessage(chat_id, '지원하지 않는 기능입니다')
+
+bot = telepot.Bot('1305669655:AAEa6-AtWj4H5AYvpCFU37WeS4nNhZqi5ms')
+bot.getMe()
+MessageLoop(bot, handle).run_as_thread()
 
 def InitTopText():
     TempFont = font.Font(g_Tk, size=20, weight='bold', family = 'Consolas')
@@ -47,6 +65,51 @@ def InitSearchListBox():
     SearchListBox.place(x=10, y=50)
 
     ListBoxScrollbar.config(command=SearchListBox.yview)
+
+def InitGmail():
+    TempFont = font.Font(g_Tk, size=15, weight='bold', family='Consolas')
+    Label(g_Tk, font=TempFont, text="메일").place(x=390, y=30)
+
+    global mailLabel
+    mailLabel = Entry(g_Tk, font=TempFont, width=25, borderwidth=5, relief='ridge')
+    mailLabel.place(x=390, y=60)
+
+    mailButton = Button(g_Tk, font=TempFont, text="보내기",command=SendGmail)
+    mailButton.place(x=687, y=57)
+
+def SendGmail():
+    from Read_json import dataLst
+    global host, port
+    host = "smtp.gmail.com"
+    port = "587"
+    html = ""
+    title2 = "맛집 탐방"
+    senderAddr = "qaz0435@gmail.com"
+    passwd = "!#!#black951"
+
+    from Read_json import dataLst
+
+    recipientAddr = mailLabel.get()
+
+    import smtplib
+    from email.mime.multipart import MIMEMultipart
+    from email.mime.text import MIMEText
+
+    msg = MIMEMultipart('alternative')
+    msg['Subject'] = title2
+    msg['From'] = senderAddr
+    msg['To'] = recipientAddr
+
+    msgPart = MIMEText(con, 'plain')
+    msg.attach(msgPart)
+
+    s = smtplib.SMTP(host, port)
+    s.ehlo()
+    s.starttls()
+    s.ehlo()
+    s.login(senderAddr, passwd)
+    s.sendmail(senderAddr, [recipientAddr], msg.as_string(()))
+    s.close()
 
 def InitInputLabel():
     global InputLabel
@@ -184,6 +247,7 @@ InitSearchListBox()
 InitInputLabel()
 InitSearchButton()
 InitRenderText()
+InitGmail()
 
 #InitSendEmailButton()
 #InitSortListBox()
